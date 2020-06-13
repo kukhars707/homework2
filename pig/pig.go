@@ -2,22 +2,27 @@ package pig
 
 import (
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
-func PigLatin(word string) string {
-	low, err := strings.ToLower(word), "Must be letter"
+var vowels = [5]string{"a", "e", "i", "o", "u"}
+var consonants = [21]string{"b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"}
+
+func PigLatin(word string) (string, error) {
+	low := strings.ToLower(word)
 
 	if low == "" || !isVowel(string(low[0])) && !isConsonant(string(low[0])) {
-		return err
+		return "", errors.New("Must be letter")
 	}
 
 	if isVowel(string(low[0])) {
-		return word + "ay"
+		return word + "ay", nil
 	} else if isConsonant(string(low[0])) {
-		return updateConsonantString(low)
+		return updateConsonantString(low), nil
 	}
 
-	return low
+	return low, nil
 
 }
 
@@ -36,7 +41,6 @@ func updateConsonantString(w string) string {
 }
 
 func isVowel(x string) bool {
-	vowels := [5]string{"a", "e", "i", "o", "u"}
 	vowelLookupTable := make(map[string]bool)
 	for _, v := range vowels {
 		vowelLookupTable[v] = true
@@ -46,7 +50,6 @@ func isVowel(x string) bool {
 }
 
 func isConsonant(x string) bool {
-	consonants := [21]string{"b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"}
 	consonantLookupTable := make(map[string]bool)
 	for _, v := range consonants {
 		consonantLookupTable[v] = true

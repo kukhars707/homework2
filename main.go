@@ -8,7 +8,12 @@ import (
 )
 
 func main() {
-	fmt.Println(pig.PigLatin("banana"))
+	pig, err := pig.PigLatin("banana")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(pig)
 	fmt.Println(code.Encode("hello"))
 	fmt.Println(code.Decode("h3 th2r2"))
 }
